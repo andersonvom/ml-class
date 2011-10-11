@@ -1,0 +1,57 @@
+## Introduction
+
+### Examples
+
+* Database mining: go through large datasets, like web click data, medical records, biology, engineering
+* Applications that cannot be programmed by hand, like autonomous helicopter, handwriting recognition, natural language processing (NLP), computer vision
+* Self-customizing programs, like amazon, netflix recommendations.
+* Understand human learning (brain, real AI)
+
+### What is Machine Learning
+
+* Field of study that gives computers the ability to learn without being explicitly programmed
+* A computer is said to learn if it can improve its performance in a given task through experience. Example: classifying emails as spam or not spam, according to whether a user marks the emails as spam or not. The percentage of emails correctly classified would be its performance.
+
+### Types of algorithms
+
+* Supervised: it is tought how to learn
+* Unsupervised: it learns by itself
+* Others: reincorcement learning, recommender systems. Less used.
+
+### Supervised Learning
+
+* The right answers are given. Ex.: in a dataset of housing prices, all prices reflect real (correct) values.
+* Regression is used to predict continuous valued output (e.g. price, how many items in an inventory will be sold over the next three months)
+* Classification is used for discrete output (e.g. 0 or 1, or a discrete set, whether each account has been hacked or not)
+
+### Unsupervised Learning
+
+* The right answer is unknown even to the programmer
+* Clustering algorithms (i.e. group large sets into smaller subsets)
+* Examples: find different market groups in a large customer set, group similar news.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

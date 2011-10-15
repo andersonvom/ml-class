@@ -1,0 +1,66 @@
+## Linear Regression with one variable
+
+* Supervised learning
+* Regression problem
+
+Notation:
+
+	m = number of training examples
+	x's = input variable or feature
+	y's = output or target variable
+	(x,y) = one training example
+	(x(i), y(i)) = i-th training example
+
+From a training set, the goal of the learning algorithm is to come up with a hypothesis function _h_ that maps _x's_ to _y's_.
+
+### Linear Models
+
+Linear regression with one variable or univariate linear regression.
+
+	h(x) = Θ0 + Θ1x
+
+
+
+The idea is to choose Θi values that make _h(x)_ close to _y_ for our training examples (x,y). We define a cost function _J_ as:
+
+	J(Θ0,Θ1) = 1/(2m) SUM(h(xi) - yi)^2
+
+In this case, this function is called "squared error function" and the goal is to minimize it. If _J_ has just one variable (e.g. `Θ0 = 0`), then _J_ is a parabola. For two variables _Θ0_ and _Θ1_, then _J_ is the 3D version of the parabola.
+
+### Gradient Descent
+
+Gradient Descent minimizes some function `J(Θ0, Θ1)` by starting off at some _Θ0_, _Θ1_ and iteratively change them to reduce the value of `J(Θ0, Θ1)` until we hopefully end up at a minimum (global or local). So, for _j=0_ and _j=1_:
+
+	repeat until convergence {
+		Θj := Θj - alpha * ∂/∂Θj (J(Θ0, Θ1))
+	}
+
+But this has to be done simultaneously for all _j_:
+
+	temp0 := Θ0 - α * ∂/∂j (J(Θ0, Θ1))
+	temp1 := Θ1 - α * ∂/∂j (J(Θ0, Θ1))
+	Θ0 := temp0
+	Θ1 := temp1
+
+Where _α_ is the **learning rate**. That is, the rate at which the baby steps will be taken towards the minimum. If _α_ is too small, gradient descent might be too slow. If _α_ is too large, it may overshoot the minimum and fail to converge or even diverge.
+
+For a cost function _J_ of one variable _Θ1_, the partial derivative _∂_ represents the tangent on J(Θ1). Since we are moving towards a minimum, gradient descent will automatically take smaller and smaller steps towards it, because the learning rate is multiplied by the partial derivative. At a local minimum, the partial derivative is zero, because the tangent is horizontal. So, there is no need to decrease _α_ over time.
+
+### "Batch" Gradient Descent
+
+Each step of gradient descent uses all the training examples. That because on each step the sum of all square differences is calculates `sum(h(x) - y)^2`, for _i_ from 1 to _m_.
+
+### Linear Algebra Notation
+
+Notation and set of the things you can do with matrices and vectors. For the house pricing example, we could have different house features such as size, number of bedrooms, number of floors and age of the house, we could represent this information in a **matrix** and a **vector**.
+
+	Matrix:                 Vector:
+	
+	    [ 2104  5  1  45 ]      [ 460 ]
+	    [ 1416  3  2  40 ]      [ 232 ]
+ 	X = [ 1534  3  2  30 ]  Y = [ 315 ]
+	    [  852  2  1  36 ]      [ 172 ]
+
+In this case, each of the columns of the matrix _X_ represent a feature (x1, x2, x3, x4) of the house and the rows represent each house. In the vector _Y_, each number represent the price of each house.
+
+

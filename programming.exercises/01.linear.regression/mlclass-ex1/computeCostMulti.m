@@ -14,6 +14,10 @@ J = 0;
 %               You should set J to the cost.
 
 
+Theta = (theta * ones(1,m))';		% m tuples of theta
+h_theta = sum( Theta .* X, 2 );		% theta0 * x0 + theta1 * x1
+squared_sum = sum( (h_theta - y).^2 );
+J = 1/(2*m) * squared_sum;
 
 
 

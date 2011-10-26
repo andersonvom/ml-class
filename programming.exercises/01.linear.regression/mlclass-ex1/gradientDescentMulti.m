@@ -18,13 +18,18 @@ for iter = 1:num_iters
     %
 
 
+    Theta = (theta * ones(1,m))';		% m tuples of theta
+    h_theta = sum( Theta .* X, 2 );
+    difference = h_theta - y;
 
+    theta_temp = theta;
+    num_feats = size(theta,1);
+    for i = 1:num_feats
+      partial_derivative = 1/m * sum(difference .* X(:,i));
+      theta_temp(i) = theta(i) - alpha * partial_derivative;
+    endfor
 
-
-
-
-
-
+    theta = theta_temp;
 
 
     % ============================================================

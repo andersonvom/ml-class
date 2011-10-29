@@ -1,0 +1,99 @@
+## Linear Regression with multiple variables
+
+### Multiple Features
+
+Add missing notes here
+
+
+### Gradient Descent for Multiple Variables
+
+Add missing notes here
+
+
+### Feature Scaling
+
+If features have very different ranges of values (e.g. size of a house being from 1000ft to 5000ft and the number of bedrooms being from 1 to 4), then linear regression may take too long to converge to a global minimum. Plotting the cost function of those features might give a visual explanation (they would be _very_ narrow elipses).
+
+
+### Normalization
+
+To normalize a given feature, a good rule of thumb is to subtract all values by the mean value and then divide them by the range (max - min) value. The range value can be replaced by the standard deviation as well.
+
+	xi = (xi - μi) / (xmax - xmin)
+	# or
+	xi = (xi - μi) / (Si)
+	
+	# where:
+	# xi   = give feature value
+	# µi   = mean value
+	# xmax = max value of xi
+	# xmin = min value of xi
+	# Si   = standard deviation of x
+
+
+### Learning Rate
+
+The chosen learning rate (_α_) cannot be too large or too small. When the learning rate is **too large**, the cost function may never converge to a minimum or it may even diverge and start increasing after each iteration. On the other hand, if the learning rate is **too small**, the cost function may take too long to converge to a minimum.
+
+A good rule of thumb for choosing _α_ is to choose values like this:
+
+	..., 0.001, 0.01, 0.1, 1, ...
+	# or better yet
+	..., 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, ...
+	# roughly increasing them threefold
+
+
+### Features and Polynomial Regression
+
+To fit linear regression to your model, you can create new features based on your current set of features. Let's say the features are the _length_ and _width_ of a land size, then another feature called _area_ could be created by multiplying the previous features: `area = length * width`.
+
+Sometimes a linear model might not be the best fit for the model, but rather a quadratic, cubic or maybe a square root model might fit the model in a better way. To accomplish this, new features can be created to represent these values. For instance, if we are using the size of a house as one of our features, _J_ function could be represented as following:
+
+	J(Θ) = Θ0 + Θ1(size) + Θ2(size)² + Θ3(size)³
+	# or depending on our model, in a different way:
+	J(Θ) = Θ0 + Θ1(size) + Θ2(√size)
+
+For that, simply applying these operations to create "new features" will make it possible to use linear regression.
+
+
+### Normal Equation
+
+It is a way to solve for _Θ_ analytically. It can be mathematically proved that the values of _Θ_ that minimize _J(Θ)_ can be computed as the following:
+
+	Θ = inverse(X' * X) * X' * y
+	# where:
+	# X = feature matrix where each row corresponds to xm feature values
+	# X' = transpose of X
+	# inverse(X) = X^-1 or the inverse of matrix X
+	# y = vector where each row corresponds to the value to be predicted
+
+When using normal equation, there is _no need for feature scaling_, so the features can be in any range of values.
+
+For _m_ training examples and _n_ features:
+
+* Gradient Descent
+    - Need to choose _α_
+    - Needs many iterations
+    - Works well even when _n_ is large
+
+* Normal Equation
+    - No need to choose _α_
+    - No need for many iterations
+    - Needs to compute `inverse(X' * X)`, a _nxn_ matrix
+    - Slow if _n_ is very large (complexity of inverting a matrix is approximately  O(n³))
+    - For current computer standards, if `n > 10000`, then gradient descent begins to get faster.
+    - Does not work for more sofisticated algorithms (e.g. classification algorithms)
+
+
+### Normal Equation and Non-Invertibility
+
+X' * X is non-invertible (singular/degenerate) if:
+
+* Redundant features (linearly dependent)
+    - x1 = size in feet²
+    - x2 = size in m²
+    - x1 = (3.28)² * x2
+* Too many features (e.g. _m_ <= _n_)
+    - delete some features or use regulatization
+
+

@@ -32,10 +32,10 @@ for i = 1:num_features
   mu(i)    = mean(X(:,i));
   sigma(i) = std(X(:,i));
 
-  X(:,i) = ( X(:,i) - mu(i) ) / sigma(i);
+  X_norm(:,i) = ( X(:,i) - mu(i) ) / sigma(i);
 endfor
 
-X_norm = X;
+
 
 
 % ============================================================

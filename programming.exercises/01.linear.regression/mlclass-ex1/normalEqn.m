@@ -13,7 +13,9 @@ theta = zeros(size(X, 2), 1);
 % ---------------------- Sample Solution ----------------------
 
 
-theta = inverse(X'*X) * X' * y;
+theta = pinv(X'*X) * X' * y;	% this will compute the correct value even if
+				% (X' * X) is not invertible. pinv calculates
+				% the pseudo-inverse of a matrix.
 
 % -------------------------------------------------------------
 

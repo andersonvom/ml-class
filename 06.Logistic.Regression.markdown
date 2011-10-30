@@ -60,7 +60,7 @@ More complex decision boundaries can be calculated, just as before, by adding ne
 
 The cost function used for linear regression is not a good choice for logistic regression because given the sigmoid function involved, it would be non-convex. Running gradient descent in a non-convex function can converge to a local minimum that is different than the global minimum.
 
-A good cost function _J_ to be used follows:
+A good cost function _J_ that is guaranteed to be convex (and also non-negative) is:
 
 	Cost(h(x), y) = |   -log(h(x)), if y=1
 	                | -log(1-h(x)), if y=0
@@ -78,8 +78,6 @@ We can further simplify both _Cost(h(x), y)_ and _J(Θ)_:
 	
 	J(Θ) = -(1/m) * ∑( y * log(h(x)) + (1-y) * log(1 - h(x)) )
 
-#### Gradient Descent
-
 To use gradient descent to minimize the cost function _J_, we will use the same template used for linear regression.
 
 	repeat {
@@ -96,4 +94,40 @@ To use gradient descent to minimize the cost function _J_, we will use the same 
 To apply logistic regression, it is convenient to use a vectorized notation when updating all values of theta. To do this, the update of theta would be:
 
 	Θ = Θ - α * (1/m) * ∑( (h(x) - y) * x )
+
+
+### Advanced Optimization
+
+* Gradient Descent
+* Conjugate Gradient
+* BFGS
+* L-BFGS
+
+* Advantages
+    - No need to manually pick α
+    - Often faster than gradient descent
+* Disadvantages
+    - More complex
+
+Octave implements a minimization function called `fminunc` (function minimum unconstrained) that, provided a initial guess for theta and a costo function that computes both the cost function and the partial derivatives for theta iteration, returns the optimum theta and the value for _J(Θ)_.
+
+	# Example
+	theta' = [ Θ1, Θ2, Θ3, ..., Θn+1 ]
+	function [jVal, gradient] = costFunction(theta)
+		jVal = [code to compute _J(Θ)_];
+		gradient(1) = [code to compute ∂/∂Θ1 (J(Θ))]
+		...
+		gradient(n+1) = [code to compute ∂/∂Θn+1 (J(Θ))]
+
+
+### Multi-class Classification: One-vs-All
+
+* Email foldering/tagging: Work, Friends, Family, Hobby (y = [1,2,3,4])
+* Medical diagrams: Not ill, Cold, Flu (y = [1,2,3])
+* Weather: Sunny, Cloudy, Rain, Snow (y = [1,2,3,4])
+
+The one-vs-all (one-vs-rest) approach uses logistic regression to create _n_ classifiers that know how to separate each class from all others (becoming a regular logistic regression problem).
+
+For each clas _i_, train a logistic regression classifier hi(x) to predict the probability of _y=i_. On a new input _x_, pick the class _i_ that maximizes `max(hi(x))`, because that would be the most confident prediction.
+
 

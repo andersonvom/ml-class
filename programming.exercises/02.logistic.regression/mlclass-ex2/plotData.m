@@ -12,8 +12,16 @@ figure; hold on;
 %               examples and 'ko' for the negative examples.
 %
 
+adm  = find(y == 1);	% Admitted
+nadm = find(y == 0);	% Not Admitted
 
+plot( X( adm, 1), X( adm, 2), 'k+', 'LineWidth',         2, 'MarkerSize', 7 );
+plot( X(nadm, 1), X(nadm, 2), 'bo', 'MarkerFaceColor', 'y', 'MarkerSize', 7 );
 
+legend("Admitted", "Not Admitted");
+legend("boxon");
+xlabel('Exam 1 Score');		% Set the x-axis label
+ylabel('Exam 2 Score');		% Set the y-axis label
 
 
 

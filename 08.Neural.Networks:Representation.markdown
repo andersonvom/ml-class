@@ -1,0 +1,66 @@
+## Neural Networks: Representation (Θ α ∑ λ)
+
+### Non-linear Hypotheses
+
+Trying to fit all polynomial terms into a linear regression or logistic regression can be very expensive if there are a lot of features in the model. The total number of features grow in the order of _O(n^m)_, where _n_ is the number of features and _m_ the maximum order of the polynom we want to include (e.g. _x^6_). Only the quadratic features are in the order of _O(n^2/2)_.
+
+Computer vision to recognize a car:
+
+	50x50 pixel images -> 2500 pixels
+	n = 2500 (grayscale) / 7500 (RGB)
+	x = [ p1 p2 p3 ... p2500 ]
+	# where:
+	# pi = pixel i intensity (0-255)
+
+If we were to include all the quadratic features (xi * xj), we would have 3 million features.
+
+
+### Neurons and the Brain
+
+Neural networks are algorithms that try to mimic the brain. It came from the hypothesis that the brain is one single learning algorithm, based on experiments such as:
+
+* Seeing with your tongue: camera that transmit signals to the tongue
+* Human echolocation (sonar): learning how to move according to sound vibrations
+* Haptic belt: direction sense
+* Implanting a 3rd eye in a frog: the frog will learn how to use it.
+
+
+### Model Representation I
+
+Similarly to how a brain neuron is composed of, the artificial neural network can be represented as a simple unit that receives inputs, does some calculation and outputs a message according to the received inputs.
+
+	x1 XXXXXXXXXXXX a1 ----------\
+	x2 XXXXXXXXXXXX a2 -----------> * -----------> h(x)
+	x3 XXXXXXXXXXXX a3 ----------/
+	Layer 1		Layer 2		Layer 3
+	(input)		(hidden)	(output)
+	
+	# Where:
+	Θ  = matrix of weights controlling function mapping from layer j to layer (j+1)
+	
+	ai = "activation" of unit i in layer j
+	a1 = g(Θ10 * x0 + Θ11 * x1 + Θ12 * x2 + Θ13 * x3)
+	a2 = g(Θ20 * x0 + Θ21 * x1 + Θ22 * x2 + Θ23 * x3)
+	a3 = g(Θ30 * x0 + Θ31 * x1 + Θ32 * x2 + Θ33 * x3)
+	
+	h(x) = a1 = g(Θ10 * a0 + Θ11 * a1 + Θ12 * a2 + Θ13 * a3)
+	# if a network has sj units in layer j and (sj+1) units in layer j+1, then
+	# Θ will be of dimension (sj+1) x (sj + 1)
+
+Anything that is not input or output layer is a hidden layer.
+
+
+### Model Representation II
+
+
+### Examples and Intuitions I
+
+
+### Examples and Intuitions II
+
+
+### Multiclass Classification
+
+
+
+

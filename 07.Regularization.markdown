@@ -1,0 +1,55 @@
+## Regularization
+
+### The Problem of Overfitting
+
+The problem of under or overfitting may happen to both linear and logistic regression.
+
+* Underfitting: using a linear function as hypothesis when the model behaves differently. It doesn't fit the training data very well. It is said that it has "high bias", as if it has a very strong pre-conception.
+* Overfitting: the hypothesis fits the training set very well, but the curve does not seem to predict future values very well. It is said that it has "high variance".
+
+Options to address overfitting:
+
+1. Reduce number of features
+    - Manually select which features to keep
+    - Model selection algorithm.
+    - Disadvantage of discarding information that may be useful
+2. Regularization
+    - Keep all the features, but reduce magnitude/values of parameters Θj
+    - Works well when we have a lot of features, each of which contributes a bit to predicting _y_
+
+
+### Cost Function
+
+The intuition is to penalize and make higher order thetas really small.
+
+	# this would lead to really small values of Θ3 and Θ4
+	min( 1/(2m) * ∑ (h(x) - y)² + 1000*Θ3² + 1000*Θ4²  )
+
+So, for small values for parameters Θ0, Θ1, ..., Θn, there would be a "simpler" hypothesis and it would be less prone to overfitting, because these parameters would contribute very little to the hypothesis. The regularization term works by trying to keep all parameters in a very low range of values.
+
+	# where: λ = very large number
+	# regularization term: --------------|
+	#                                    |
+	J(Θ) = 1/(2m) * ∑( (h(x) - y)² + λ * ∑(Θj²) )
+
+There is no need to include Θ0 in the regularization term, but it makes little difference if it is. Keep in mind that if _λ_ is extremelly large, than this will result in underfitting, since all thetas will be penalized (thus become closer to zero) and the hypothesis function will be influenced by _Θ0_ alone.
+
+
+### Regularized Linear Regression
+
+There is no need to regularize _Θ0_ when updating thetas in gradient descent. Theta updates become:
+
+	Θ0 = Θ0 - α * (1/m) * ∑( (h(x) - y) * x0 )
+	Θj = Θj - α * (1/m) * ∑( (h(x) - y) * xj + λ * ∑(Θj) )
+	
+	# the update on Θj can be rewritten as:
+	Θj = Θj * (1 - α * (λ/m)) - α/m * ∑( (h(x) - y) * xj )
+	# where (1 - α * (λ/m)) is slightly less than 1 (e.g. 0.99)
+
+Regularizing the normal equation method will then become:
+
+	Θ = inverse( X' * X + λ * M ) * (X' * y)
+	# where M = I(n+1), with zero on element 1,1
+
+Regularizing Logistic Regression works just like Linear Regression, except that the hypothesis function _h(x)_ is different.
+

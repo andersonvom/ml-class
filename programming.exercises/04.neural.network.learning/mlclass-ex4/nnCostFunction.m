@@ -96,12 +96,9 @@ J = sum( 1/m * sum( -y .* log(h_x) - (1-y) .* log(1 - h_x) ) ) + reg_term;
 
 
 % Back Propagation
-% Remove bias units from Thetas because we do not want to calculate their errors
-Theta2 = Theta2(:,2:end);
-Theta1 = Theta1(:,2:end);
-
+% No need to calculate errors for bias units: Theta2(:,2:end)
 delta3 = a3 - y;
-delta2 = delta3 * Theta2 .* sigmoidGradient(z2);
+delta2 = delta3 * Theta2(:,2:end) .* sigmoidGradient(z2);
 
 Delta2 = (1/m) * delta3' * a2;
 Delta1 = (1/m) * delta2' * a1;

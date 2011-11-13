@@ -92,7 +92,7 @@ reg_term = ( lambda / (2*m) ) * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2)));
 
 
 % Total cost:
-J = sum( 1/m * sum( -y .* log(h_x) - (1-y) .* log(1 - h_x) ) ) + reg_term
+J = sum( 1/m * sum( -y .* log(h_x) - (1-y) .* log(1 - h_x) ) ) + reg_term;
 
 
 % -------------------------------------------------------------

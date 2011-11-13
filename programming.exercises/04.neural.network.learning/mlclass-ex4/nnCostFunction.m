@@ -103,8 +103,8 @@ delta2 = delta3 * Theta2(:,2:end) .* sigmoidGradient(z2);
 Delta2 = (1/m) * delta3' * a2;
 Delta1 = (1/m) * delta2' * a1;
 
-Theta1_grad = Delta1; % for clarity only
-Theta2_grad = Delta2; % for clarity only
+Theta1_grad = Delta1 + (lambda/m) * Theta1; % Regularizing
+Theta2_grad = Delta2 + (lambda/m) * Theta2; % Regularizing
 
 
 % -------------------------------------------------------------

@@ -1,0 +1,145 @@
+## Neural Networks: Learning
+
+### Cost Function
+
+Binary classification:
+
+	h(x) ∈ R
+	L = 4 # the number of layers
+	sl = 1 or K = 1 # The number of units in the output layer
+	
+Multi-class classification (K classes)
+
+	K output units
+	h(x) ∈ R^k
+	sl = K (K >= 3)
+
+Cost function is a generalization of the Logistic Regression one:
+
+	# Intuition:
+	#	- cost: the sum of the cost function from all output units
+	#	- regularization term: sums all _Θij_ from layer _l_, except bias unit
+	J(Θ) = -(1/m) * ( ∑∑ y * log(h(x)) + (1-y) * log(1-h(x)) ) + (λ/2m * ∑∑∑Θ^2)
+	
+
+### Backpropagation Algorithm
+
+Intuition: _δj_ = "error" of node _j_ in layer _l_. For each output unit (layer L=4):
+
+	δj = aj    - yj # or
+	δj = h(x)j - yj
+	# vectorizing our function:
+	δ4 = a4 - y
+	
+	# backpropagating the error to the previous layers:
+	δ3 = (Θ3' * δ4) .* g'(z3)
+	δ2 = (Θ2' * δ3) .* g'(z2)
+	# where:
+	z3 = a3 .* (1-a3)
+	z2 = a2 .* (1-a2)
+
+There is no need for calculating _δ_ for layer 1 because that is the input layer and we don't want to change these values.
+
+The partial derivatives necessary to minimize the cost function can be calculated as:
+
+	# Ignoring the regularization term (λ = 0)
+	# where _l_ is a layer number:
+	∂/∂Θij (J(Θ)) = aj(l) * δj(l+1)
+
+Backpropagation algorithm:
+
+	# Training set {(x1,y1), (x2,y2), ..., (xm,ym)}
+	Set Δij(l) = 0 (for all i,j,l)
+	for i=1..m:
+		set a1 = xi
+		perform forward propagation to compute a(l) for l=2,3,...,L
+		using yi, compute δ = a - yi
+		compute δl-1, δl-2, ..., δ2
+		Δ(l) = Δ(l) + δ(l+1) * (a(l))'
+	# and calculate the partial derivatives:
+	Dij(l) = (1/m) * Δij(l) + λ * Θij(l) # j != 0
+	Dij(l) = (1/m) * Δij(l)              # j == 0
+
+
+### Backpropagation Intuition
+
+Backpropagation works in a similar way of forward propagation: an error for the output unit is calculated based on the value calculated by forward propagation and the actual value of _y_ for the unit. The errors for previous units are calculated multiplying this error by each respective theta value of the previous units. This process is repeated throughout the network for all examples.
+
+
+### Implementation note: Unrolling parameters
+
+To make calculations simpler and vectorized versions of the problem easier to do, octave can transform matrices into vectors (and back into matrices) with:
+
+	# Vectorizing:
+	Theta1 = ones(10,11);
+	Theta2 = ones(10,11);
+	Theta3 = ones(4,11);
+	thetaVec = [ Theta1(:) ; Theta2(:) ; Theta3(:) ];
+	
+	# And rolling back:
+	Theta1 = reshape(thetaVec(  1:110, 10, 11));
+	Theta2 = reshape(thetaVec(111:220, 10, 11));
+	Theta3 = reshape(thetaVec(221:264,  4, 11));
+	
+Learning Algorithm implementation:
+
+	Have initial parameters Θ1, Θ2, Θ3
+	Unroll to get _initialTheta_ to pass to fminunc(@costFunction, initialTheta, options)
+	
+	function [jVal, gradientVec] = costFunction(thetaVec)
+		From _thetaVec_, get Θ1, Θ2, Θ3 using the _reshape_ function
+		Use forward prop/back prop to compute D1, D2, D3 and J(Θ)
+		Unroll D1, D2, D3 to get gradientVec
+
+
+### Gradient Checking
+
+Because the derivative of a function at a given point is the slope of that point on the function curve, a good estimate of the partial derivative `∂/∂Θij (J(Θ))` can be thought as the straight line between _J(Θ-ε)_ and _J(Θ+ε)_.
+
+A numerical approximation of the gradient can then be calculated as:
+
+	gradApprox = (J(Θ+ε) - J(Θ-ε)) / (2*ε)
+
+When using a parameter vector Θ, the numerical value of the partial derivatives can be calculated as:
+
+	∂/∂Θ1 (J(Θ)) ≈ ( J(Θ1+ε, Θ2, Θ3, ..., Θn) - J(Θ1-ε, Θ2, Θ3, ..., Θn) ) / (2ε)
+	∂/∂Θ2 (J(Θ)) ≈ ( J(Θ1, Θ2+ε, Θ3, ..., Θn) - J(Θ1, Θ2-ε, Θ3, ..., Θn) ) / (2ε)
+	∂/∂Θ3 (J(Θ)) ≈ ( J(Θ1, Θ2, Θ3+ε, ..., Θn) - J(Θ1, Θ2, Θ3-ε, ..., Θn) ) / (2ε)
+	...
+	∂/∂Θn (J(Θ)) ≈ ( J(Θ1, Θ2, Θ3, ..., Θn+ε) - J(Θ1, Θ2, Θ3, ..., Θn-ε) ) / (2ε)
+
+This method should not be used in production because it is computationally very expensive when compared to backprop.
+
+
+### Random Initialization
+
+If all thetas are initialized with the value zero, then all units in each layer of the neural network will compute the exact same function. We can avoid the **symmetry** problem by initializing each theta to a random value in [-ε, ε]. The following code will do so in octave:
+
+	Theta1 = rand(10,11) * (2*ε) - ε
+	Theta2 = rand(1,11) * (2*ε) - ε
+
+
+### Putting It Together
+
+Chosing the architecture of a neural network, the following guidelines can be used:
+
+	No. of input units: dimension of features _xi_
+	No. of output units: Number of classes
+	Hidden layers default:
+		- 1 hidden layer
+		- if more than 1 hidden layer, the same no. of hidden units in each of them
+		- the more units per layer the better (more computation required, though)
+
+Training a neural network:
+
+	* Randomly initialize weights
+	* Implement forward propagation
+	* Implement cost function
+	* Implement backprop
+	* for i = 1:m
+		* perform forward propagation and back propagation using example (xi, yi)
+		(get activations a(l) and delta terms δ(l) for l=2..L)
+	* Use gradient checking to verify the partial derivatives of backprop (disable afterwards)
+	* Use gradient descent or other optimization method with backprop to minimize _J(Θ)_
+
+

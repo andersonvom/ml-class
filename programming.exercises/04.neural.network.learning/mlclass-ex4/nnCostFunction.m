@@ -62,22 +62,29 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% reformat 'y' so that it has the values for all output units
+y2 = zeros(m, num_labels);
+for i=1:m
+	y_val = y(i);
+	y2(i,y_val) = 1;
+endfor
+y = y2;
 
 
+% Forward Propagation - BEGIN
+X = [ones(m,1) X];
+z2 = X * Theta1';
+a2 = sigmoid(z2);
+
+a2 = [ones(size(a2,1),1) a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+h_x = a3;						% for clarity only
+% Forward Propagation - END
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+% Total cost:
+J = sum( 1/m * sum( -y .* log(h_x) - (1-y) .* log(1 - h_x) ) )
 
 
 % -------------------------------------------------------------

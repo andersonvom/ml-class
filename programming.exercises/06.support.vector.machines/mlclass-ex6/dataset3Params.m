@@ -23,10 +23,31 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+possible_values = [ 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30 ];
+min_error = Inf;
 
+for C_i=possible_values,
 
+	for sigma_i=possible_values,
 
+		model= svmTrain(X, y, C_i, @(x1, x2) gaussianKernel(x1, x2, sigma_i));
+		predictions = svmPredict(model, Xval);
+		error_i = mean(double(predictions ~= yval));
 
+		% If the performance was better, store values for later use
+		if (error_i < min_error)
+			min_error = error_i;
+			C = C_i;
+			sigma = sigma_i;
+			[C, sigma, min_error]
+		endif
+
+	endfor
+
+endfor
+
+disp("Best values for C and sigma and its error:");
+[C, sigma, min_error]
 
 
 % =========================================================================

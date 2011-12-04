@@ -27,11 +27,14 @@ centroids = zeros(K, n);
 %
 
 
+for i=1:K
 
+	examples = (idx == i);
+	num_examples = sum( examples );
+	indices = find(examples);
+	centroids(i,:) = (1/num_examples) * sum( X(indices,:) );
 
-
-
-
+endfor
 
 % =============================================================
 

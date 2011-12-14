@@ -42,7 +42,8 @@ Theta_grad = zeros(size(Theta));
 
 diff_error = (X * Theta' - Y) .* R;	% Only compute cost when user has rated the movie
 square_error = diff_error .^ 2;
-J = (1/2) * sum(sum( square_error));
+
+J = (1/2) * sum(sum(square_error)) + (lambda/2) * ( sum(sum(Theta.^2)) + sum(sum(X.^2)) );
 
 
 % Gradients for X and Theta

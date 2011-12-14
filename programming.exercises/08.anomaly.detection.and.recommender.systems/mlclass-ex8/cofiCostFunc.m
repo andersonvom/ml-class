@@ -40,8 +40,8 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
-
+square_error = (X * Theta' - Y) .^ 2;
+J = (1/2) * sum(sum( square_error .* R ));	% Only compute cost when user has rated the movie
 
 
 

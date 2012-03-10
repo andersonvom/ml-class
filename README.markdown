@@ -1,0 +1,8 @@
+### Machine Learning
+http://www.ml-class.org/
+
+Each week, we will ask you to watch a number of videos on machine learning (approx 2-3 hours total). These videos may have a number of in-video questions embedded in them, which you should answer (but are not counted towards the final score). In addition, we have designed two types of exercises to help you become great at machine learning: (i) Review questions (multiple-choice or short answer questions that you answer on a website to make sure you understood the main ideas), and (ii) Programming exercises, in which you gain practice implementing and getting learning algorithms to work. In detail:
+
+* Review questions. After watching a week's video lectures, we will ask you to answer a set of review questions (approx 10 questions) on the content that you just learned. If you don't get a perfect score, you can re-take the review questions over and over, up to the deadline. Only your highest score will be used for the final grade. It should be possible for every student to get full marks on the review questions.
+* Programming exercises. Starting from the second week (and in every week thereafter), we ask you to complete a programming exercise, where you will gain practice implementing and getting a learning algorithm to work. The software and instructions we provide will allow you to determine with high confidence that you have the right answer before you submit your solution, so we hope you'll keep working on it until you get the right answer. When you submit your solution (you can submit up to 3 times without any penalty), our server will also verify rightaway that you got the right answer. It should also be possible for every student to get full marks on the programming exercises. 
+

@@ -1,0 +1,106 @@
+## Neural Networks: Learning
+
+### Deciding What to Try Next
+
+If after implementing linear regression to predict, say, housing prices, it makes predictions with large unacceptable errors, these things can possibly be further improved:
+
+* Get more training examples (time consuming)
+* Try smaller sets of features
+* Try getting additional features (time consuming)
+* Try adding polynomial features (x1^2, x2^2, x1x2, ...) (time consuming)
+* Try decreasing lambda
+* Try increasing lambda
+
+A machine learning diagnostic is a test that you can run to gain insight of what is/isn't working witha learning algorithm and gain guidance as to how best to improve its performance. They can take time to implement, but doing so can be a very good use of time.
+
+
+### Evaluating a Hypothesis
+
+A good way to evaluate the hypothesis is to divide the training set into two categories:
+
+* 70% will be used to train the application
+* 30% will be used to verify the accuracy of the application
+
+The test error can be calculated just as the cost function previously used. For a misclassification, an error function can be defined as follows:
+
+	err(h(x), y) =	{ 1  if h(x) > 0.5, y = 0
+					{ 0  if h(x) < 0.5, y = 1
+	
+	Test error = (1/m) * sum( err(h(x), y) )
+
+
+### Model Selection and train Validation Test Sets
+
+Another method is to use different models (a good polinomial order) and choosing the most appropriate one. Divide examples in three:
+
+* 60% will be the training set
+* 20% will be the cross validation set
+* 20% will be the test set
+
+To cross validate each model, calculate the cost function for each of them and select the one that has the lowest cost function.
+
+
+### Diagnosing Bias vs. Variance
+
+When suffering from **high bias**, the cost function for the training set and for the validation set will **both be high**. When suffering from **high variance**, the cost function for the training set will be low - meaning the data is being well fit - but the cost function for the validation set will be high - meaning it is still making a lot of mistakes on new examples.
+
+
+### Regulatization and Bias Variance
+
+The plot of the cost function is mirrorred from the previous case. Everything else is pretty much the same.
+
+When suffering from **high bias**, the cost function for the training set and for the validation set will **both be high**. When suffering from **high variance**, the cost function for the training set will be low - meaning the data is being well fit - but the cost function for the validation set will be high - meaning it is still making a lot of mistakes on new examples.
+
+
+### Learning Curves
+
+
+
+
+### Deciding What to do Next Revisited
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
